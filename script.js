@@ -18,7 +18,7 @@ var ajax = obtenerAjax();
 por defecto ajax.open("GET","script.php", true);*/
 
 function peticionServidor(){
-    ajax.open("GET","script.php?" + obtenerQueryString);
+    ajax.open("GET","script.php?" + obtenerQueryString());
     /* ajax.onreadystatechange detecta cualquier cambio en los estados. 
     Si se pone ajax.onreadystatechange(), se ejecuta la funcion. */
 
@@ -32,27 +32,25 @@ function peticionServidor(){
     ajax.send(null);
 }
 
-/* function calcular(){
-    alert("Hola");
-} */
 
 function respuestaServidor() {
     
     if (ajax.readyState == 4 && ajax.status == 200) {
-        /* try {
-            var a = parseInt(document.f.n1.value),
-                b = parseInt(document.f.n2.value);
-            document.f.resultado.value = a + b;
-          } catch (e) {
-          } */
-        document.getElementById("resultado").innerHTML = ajax.responseText;
+        /* document.getElementById("resultado").innerHTML = ajax.responseText; */
+
+        operaciones = JSON.parse(ajax.responseText);
+        // var operaciones = JSON.parse(ajax.responseText);
+        document.getElementById("suma").value = operaciones.suma;
+        document.getElementById("resta").value = operaciones.resta;
+        document.getElementById("multiplicacion").value = operaciones.multiplicacion;
     }
 }
 
 function obtenerQueryString(){
-    n1 = encodeURIComponent(document.getElementById("n1").value); 
-    n2 = encodeURIComponent(document.getElementById("n2").value);
-    query = "n1=" + n1 + "&n2=" + n2 + "&nocache=" + Math.random();
-    /* & separa variables */
+    var n1 = encodeURIComponent(document.getElementById("n1").value); 
+    var n2 = encodeURIComponent(document.getElementById("n2").value);
+    var query = "n1=" + n1 + "&n2=" + n2 + "&nocache=" + Math.random();
     return query;
 }
+
+contacto = {'nombre':'carlos','edad':40};
